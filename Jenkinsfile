@@ -10,7 +10,7 @@ pipeline {
         stage('Deploy'){
             steps{
                 echo "Deploying..."
-                // echo "Version from params: ${params.version}"
+                echo "Version from params: ${params.version}"
 
             }
         }
@@ -26,12 +26,11 @@ pipeline {
             steps{
                 sh """
                 cd terraform
-                terraform plan
+                terraform plan -var="app_version=${params.version}"
                 """
             }
         }
-    }
-    stage('Approve') {
+        stage('Approve') {
             input {
                 message "Should we continue?"
                 ok "Yes, we should."
@@ -62,3 +61,4 @@ pipeline {
             //deleteDir()
         }
     }
+}
