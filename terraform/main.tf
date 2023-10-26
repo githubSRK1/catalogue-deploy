@@ -9,7 +9,7 @@ module "catalogue_instance" {
   //user_data = file("catalogue.sh")
   tags = merge(
     {
-        Name = "Catalogue-DEV-AMI"
+        Name = "catalogue-${var.env}-ami"
     },
     var.common_tags
   )
@@ -128,7 +128,7 @@ resource "aws_autoscaling_group" "catalogue" {
 
   tag {
     key                 = "Name"
-    value               = "Catalogue"
+    value               = "catalogue-${var.env}-${local.current_time}"
     propagate_at_launch = true
   }
 
